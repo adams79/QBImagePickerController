@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		192BE17618C771DD00819D66 /* QBImagePickerController.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 19965BA518C770C90052F274 /* QBImagePickerController.h */; };
 		19965B7418C7709C0052F274 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 19965B7318C7709C0052F274 /* Foundation.framework */; };
 		19965B8218C7709C0052F274 /* XCTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 19965B8118C7709C0052F274 /* XCTest.framework */; };
 		19965B8318C7709C0052F274 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 19965B7318C7709C0052F274 /* Foundation.framework */; };
@@ -42,6 +43,7 @@
 			dstPath = "include/$(PRODUCT_NAME)";
 			dstSubfolderSpec = 16;
 			files = (
+				192BE17618C771DD00819D66 /* QBImagePickerController.h in CopyFiles */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
