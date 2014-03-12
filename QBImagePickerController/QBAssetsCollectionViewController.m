@@ -12,6 +12,9 @@
 #import "QBAssetsCollectionViewCell.h"
 #import "QBAssetsCollectionFooterView.h"
 
+#define defaultThumbnailSize 77.5f
+#define defaultSectionInset 2
+
 @interface QBAssetsCollectionViewController ()
 
 @property (nonatomic, strong) NSMutableArray *assets;
@@ -47,14 +50,15 @@
     [super viewWillAppear:animated];
     
     // Scroll to bottom --- iOS 7 differences
+    /*
     CGFloat topInset;
     if ([self respondsToSelector:@selector(setEdgesForExtendedLayout:)]) {
         topInset = ((self.edgesForExtendedLayout && UIRectEdgeTop) && (self.collectionView.contentInset.top == 0)) ? (20.0 + 44.0) : 0.0;
     } else {
         topInset = (self.collectionView.contentInset.top == 0) ? (20.0 + 44.0) : 0.0;
-    }
+    }*/
     
-    [self.collectionView setContentOffset:CGPointMake(0, self.collectionView.collectionViewLayout.collectionViewContentSize.height - self.collectionView.frame.size.height + topInset)
+    [self.collectionView setContentOffset:CGPointMake(0, self.collectionView.collectionViewLayout.collectionViewContentSize.height - self.collectionView.frame.size.height + self.collectionView.contentInset.top)
                                  animated:NO];
     
     // Validation
@@ -217,27 +221,21 @@
         
         switch (self.filterType) {
             case QBImagePickerControllerFilterTypeNone:
-                footerView.textLabel.text = [NSString stringWithFormat:NSLocalizedStringFromTable(@"format_photos_and_videos",
-                                                                                                  @"QBImagePickerController",
-                                                                                                  nil),
-                                             self.numberOfPhotos,
-                                             self.numberOfVideos
+                footerView.textLabel.text = [NSString stringWithFormat:@"%ld %@, %ld %@",
+                                             self.numberOfPhotos,NSLocalizedString(@"PHOTOS", nil),
+                                             self.numberOfVideos,NSLocalizedString(@"VIDEOS",nil)
                                              ];
                 break;
                 
             case QBImagePickerControllerFilterTypePhotos:
-                footerView.textLabel.text = [NSString stringWithFormat:NSLocalizedStringFromTable(@"format_photos",
-                                                                                                  @"QBImagePickerController",
-                                                                                                  nil),
-                                             self.numberOfPhotos
+                footerView.textLabel.text = [NSString stringWithFormat:@"%ld %@",
+                                             self.numberOfPhotos,NSLocalizedString(@"PHOTOS", nil)
                                              ];
                 break;
                 
             case QBImagePickerControllerFilterTypeVideos:
-                footerView.textLabel.text = [NSString stringWithFormat:NSLocalizedStringFromTable(@"format_videos",
-                                                                                                  @"QBImagePickerController",
-                                                                                                  nil),
-                                             self.numberOfVideos
+                footerView.textLabel.text = [NSString stringWithFormat:@"%ld %@",
+                                             self.numberOfVideos,NSLocalizedString(@"VIDEOS", nil)
                                              ];
                 break;
         }
@@ -253,12 +251,13 @@
 
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath
 {
-    return CGSizeMake(77.5, 77.5);
+    float thumbSize =  (self.imagePickerController.thumbnailSize !=0) ? self.imagePickerController.thumbnailSize : defaultThumbnailSize;
+    return CGSizeMake(thumbSize, thumbSize);
 }
 
 - (UIEdgeInsets)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout insetForSectionAtIndex:(NSInteger)section
 {
-    return UIEdgeInsetsMake(2, 2, 2, 2);
+    return UIEdgeInsetsMake(defaultSectionInset, defaultSectionInset, defaultSectionInset, defaultSectionInset);
 }
 
 - (BOOL)collectionView:(UICollectionView *)collectionView shouldSelectItemAtIndexPath:(NSIndexPath *)indexPath

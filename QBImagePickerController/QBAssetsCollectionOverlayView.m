@@ -12,6 +12,9 @@
 // Views
 #import "QBAssetsCollectionCheckmarkView.h"
 
+#define checkmarkSize 24.0f
+#define checkmarkPadding 4.0f
+
 @interface QBAssetsCollectionOverlayView ()
 
 @property (nonatomic, strong) QBAssetsCollectionCheckmarkView *checkmarkView;
@@ -29,7 +32,8 @@
         self.backgroundColor = [UIColor colorWithWhite:1.0 alpha:0.4];
         
         // Create a checkmark view
-        QBAssetsCollectionCheckmarkView *checkmarkView = [[QBAssetsCollectionCheckmarkView alloc] initWithFrame:CGRectMake(self.bounds.size.width - (4.0 + 24.0), self.bounds.size.height - (4.0 + 24.0), 24.0, 24.0)];
+        QBAssetsCollectionCheckmarkView *checkmarkView = [[QBAssetsCollectionCheckmarkView alloc] initWithFrame:CGRectMake(self.bounds.size.width - (checkmarkPadding + checkmarkSize), self.bounds.size.height - (checkmarkPadding + checkmarkSize), checkmarkSize, checkmarkSize)];
+        checkmarkView.checkmarkRadius = checkmarkSize/2.0f;
         checkmarkView.autoresizingMask = UIViewAutoresizingNone;
         
         checkmarkView.layer.shadowColor = [[UIColor grayColor] CGColor];

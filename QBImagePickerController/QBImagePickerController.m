@@ -11,10 +11,12 @@
 
 // Views
 #import "QBImagePickerGroupCell.h"
-#import "QBAssetsCollectionViewLayout.h"
+
 
 // ViewControllers
 #import "QBAssetsCollectionViewController.h"
+
+#define defaultSpacing 2
 
 ALAssetsFilter * ALAssetsFilterFromQBImagePickerControllerFilterType(QBImagePickerControllerFilterType type) {
     switch (type) {
@@ -296,7 +298,10 @@ ALAssetsFilter * ALAssetsFilterFromQBImagePickerControllerFilterType(QBImagePick
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    QBAssetsCollectionViewController *assetsCollectionViewController = [[QBAssetsCollectionViewController alloc] initWithCollectionViewLayout:[QBAssetsCollectionViewLayout layout]];
+    UICollectionViewFlowLayout *layout = [[UICollectionViewFlowLayout alloc] init];
+    layout.minimumInteritemSpacing = defaultSpacing;
+    layout.minimumLineSpacing = defaultSpacing;
+    QBAssetsCollectionViewController *assetsCollectionViewController = [[QBAssetsCollectionViewController alloc] initWithCollectionViewLayout:layout];
     assetsCollectionViewController.imagePickerController = self;
     assetsCollectionViewController.filterType = self.filterType;
     assetsCollectionViewController.allowsMultipleSelection = self.allowsMultipleSelection;

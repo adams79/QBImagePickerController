@@ -9,5 +9,8 @@
 #import <UIKit/UIKit.h>
 
 @interface QBAssetsCollectionCheckmarkView : UIView
-
+@property (nonatomic,retain) UIColor *checkmarkBackgroundColor;
+@property (nonatomic,retain) UIColor *checkmarkBorderColor;
+@property (nonatomic,retain) UIColor *checkmarkColor;
+@property (nonatomic,assign) float checkmarkRadius;
 @end

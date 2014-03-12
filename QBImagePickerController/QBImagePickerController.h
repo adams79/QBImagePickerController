@@ -29,7 +29,7 @@ UIKIT_EXTERN ALAssetsFilter * ALAssetsFilterFromQBImagePickerControllerFilterTyp
 @end
 
 @interface QBImagePickerController : UITableViewController
-
+@property (nonatomic,assign) float thumbnailSize;
 @property (nonatomic, strong, readonly) ALAssetsLibrary *assetsLibrary;
 @property (nonatomic, copy, readonly) NSArray *assetsGroups;
 @property (nonatomic, strong, readonly) NSMutableSet *selectedAssetURLs;

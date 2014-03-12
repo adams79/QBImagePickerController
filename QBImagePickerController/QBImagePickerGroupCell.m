@@ -11,6 +11,18 @@
 // Views
 #import "QBImagePickerThumbnailView.h"
 
+
+#define labelLeftMargin 18
+#define leftPadding 8
+#define thumbnailFrame (CGRectMake(leftPadding, 4, 70, 74))
+#define nameLabelOffset CGPointMake(CGRectGetMaxX(thumbnailFrame) + labelLeftMargin,22)
+#define nameLabelSize CGSizeMake(180,21)
+#define labelVerticalSpacing 3
+#define countLabelOffset CGPointMake(nameLabelOffset.x,nameLabelOffset.y+nameLabelSize.height+labelVerticalSpacing)
+#define countLabelSize CGSizeMake(180,15)
+
+
+
 @interface QBImagePickerGroupCell ()
 
 @property (nonatomic, strong) QBImagePickerThumbnailView *thumbnailView;
@@ -21,6 +33,10 @@
 
 @implementation QBImagePickerGroupCell
 
+-(void)prepareForReuse {
+    [self.thumbnailView setAssetsGroup:nil];
+}
+
 - (instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
 {
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
@@ -30,14 +46,14 @@
         self.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
         
         // Create thumbnail view
-        QBImagePickerThumbnailView *thumbnailView = [[QBImagePickerThumbnailView alloc] initWithFrame:CGRectMake(8, 4, 70, 74)];
+        QBImagePickerThumbnailView *thumbnailView = [[QBImagePickerThumbnailView alloc] initWithFrame:thumbnailFrame];
         thumbnailView.autoresizingMask = UIViewAutoresizingFlexibleRightMargin | UIViewAutoresizingFlexibleBottomMargin;
         
         [self.contentView addSubview:thumbnailView];
         self.thumbnailView = thumbnailView;
         
         // Create name label
-        UILabel *nameLabel = [[UILabel alloc] initWithFrame:CGRectMake(8 + 70 + 18, 22, 180, 21)];
+        UILabel *nameLabel = [[UILabel alloc] initWithFrame:CGRectMake(nameLabelOffset.x, nameLabelOffset.y, nameLabelSize.width, nameLabelSize.height)];
         nameLabel.font = [UIFont systemFontOfSize:17];
         nameLabel.textColor = [UIColor blackColor];
         nameLabel.autoresizingMask = UIViewAutoresizingFlexibleRightMargin | UIViewAutoresizingFlexibleBottomMargin | UIViewAutoresizingFlexibleWidth;
@@ -46,7 +62,7 @@
         self.nameLabel = nameLabel;
         
         // Create count label
-        UILabel *countLabel = [[UILabel alloc] initWithFrame:CGRectMake(8 + 70 + 18, 46, 180, 15)];
+        UILabel *countLabel = [[UILabel alloc] initWithFrame:CGRectMake(countLabelOffset.x, countLabelOffset.y, countLabelSize.width, countLabelSize.height)];
         countLabel.font = [UIFont systemFontOfSize:12];
         countLabel.textColor = [UIColor blackColor];
         countLabel.autoresizingMask = UIViewAutoresizingFlexibleRightMargin | UIViewAutoresizingFlexibleBottomMargin | UIViewAutoresizingFlexibleWidth;
