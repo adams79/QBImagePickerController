@@ -10,4 +10,5 @@ Pod::Spec.new do |s|
   s.requires_arc = true
   s.framework    = 'AssetsLibrary'
   s.source_files = 'QBImagePickerController/*.{h,m}'
+  s.resources    = "QBImagePickerController/resources/*.png"
 end

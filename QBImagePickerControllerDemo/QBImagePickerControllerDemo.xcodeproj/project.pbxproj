@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1F40BCE218D0C42B0064BB71 /* videoIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = 1F40BCE018D0C42B0064BB71 /* videoIcon.png */; };
+		1F40BCE318D0C42B0064BB71 /* videoIcon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1F40BCE118D0C42B0064BB71 /* videoIcon@2x.png */; };
 		AA5F3BFE1871A826009738C1 /* AssetsLibrary.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AA5F3BFD1871A826009738C1 /* AssetsLibrary.framework */; };
 		AA6802751873F9740077CEEA /* QBAssetsCollectionCheckmarkView.m in Sources */ = {isa = PBXBuildFile; fileRef = AA6802641873F9730077CEEA /* QBAssetsCollectionCheckmarkView.m */; };
 		AA6802761873F9740077CEEA /* QBAssetsCollectionFooterView.m in Sources */ = {isa = PBXBuildFile; fileRef = AA6802661873F9730077CEEA /* QBAssetsCollectionFooterView.m */; };
@@ -43,6 +45,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		1F40BCE018D0C42B0064BB71 /* videoIcon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = videoIcon.png; sourceTree = "<group>"; };
+		1F40BCE118D0C42B0064BB71 /* videoIcon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "videoIcon@2x.png"; sourceTree = "<group>"; };
 		AA5F3BFD1871A826009738C1 /* AssetsLibrary.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AssetsLibrary.framework; path = System/Library/Frameworks/AssetsLibrary.framework; sourceTree = SDKROOT; };
 		AA6802631873F9730077CEEA /* QBAssetsCollectionCheckmarkView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = QBAssetsCollectionCheckmarkView.h; path = ../../QBImagePickerController/QBAssetsCollectionCheckmarkView.h; sourceTree = "<group>"; };
 		AA6802641873F9730077CEEA /* QBAssetsCollectionCheckmarkView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = QBAssetsCollectionCheckmarkView.m; path = ../../QBImagePickerController/QBAssetsCollectionCheckmarkView.m; sourceTree = "<group>"; };
@@ -106,9 +110,20 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		1F40BCDF18D0C42B0064BB71 /* resources */ = {
+			isa = PBXGroup;
+			children = (
+				1F40BCE018D0C42B0064BB71 /* videoIcon.png */,
+				1F40BCE118D0C42B0064BB71 /* videoIcon@2x.png */,
+			);
+			name = resources;
+			path = ../../QBImagePickerController/resources;
+			sourceTree = "<group>";
+		};
 		AA8A6B0218717B87008659CB /* QBImagePickerController */ = {
 			isa = PBXGroup;
 			children = (
+				1F40BCDF18D0C42B0064BB71 /* resources */,
 				AA68026F1873F9740077CEEA /* QBImagePickerController.h */,
 				AA6802701873F9740077CEEA /* QBImagePickerController.m */,
 				AA6802711873F9740077CEEA /* QBImagePickerGroupCell.h */,
@@ -289,7 +304,9 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1F40BCE218D0C42B0064BB71 /* videoIcon.png in Resources */,
 				AAD64ED518710798004C3AD5 /* Images.xcassets in Resources */,
+				1F40BCE318D0C42B0064BB71 /* videoIcon@2x.png in Resources */,
 				AAD64EC718710798004C3AD5 /* InfoPlist.strings in Resources */,
 				AAD64ED018710798004C3AD5 /* Main.storyboard in Resources */,
 			);
