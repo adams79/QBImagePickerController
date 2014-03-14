@@ -38,7 +38,7 @@ ALAssetsFilter * ALAssetsFilterFromQBImagePickerControllerFilterType(QBImagePick
 
 @property (nonatomic, strong, readwrite) ALAssetsLibrary *assetsLibrary;
 @property (nonatomic, copy, readwrite) NSArray *assetsGroups;
-@property (nonatomic, strong, readwrite) NSMutableSet *selectedAssetURLs;
+@property (nonatomic, strong, readwrite) NSMutableArray *selectedAssetURLs;
 
 @end
 
@@ -56,7 +56,7 @@ ALAssetsFilter * ALAssetsFilterFromQBImagePickerControllerFilterType(QBImagePick
     
     if (self) {
         // Property settings
-        self.selectedAssetURLs = [NSMutableSet set];
+        self.selectedAssetURLs = [NSMutableArray new];
         
         self.groupTypes = @[
                             @(ALAssetsGroupSavedPhotos),
@@ -242,27 +242,45 @@ ALAssetsFilter * ALAssetsFilterFromQBImagePickerControllerFilterType(QBImagePick
 
 - (void)passSelectedAssetsToDelegate
 {
-    // Load assets from URLs
-    __block NSMutableArray *assets = [NSMutableArray array];
     
-    for (NSURL *selectedAssetURL in self.selectedAssetURLs) {
-        __weak typeof(self) weakSelf = self;
-        [self.assetsLibrary assetForURL:selectedAssetURL
-                            resultBlock:^(ALAsset *asset) {
-                                // Add asset
-                                [assets addObject:asset];
-                                
-                                // Check if the loading finished
-                                if (assets.count == weakSelf.selectedAssetURLs.count) {
-                                    // Delegate
-                                    if (self.delegate && [self.delegate respondsToSelector:@selector(imagePickerController:didSelectAssets:)]) {
-                                        [self.delegate imagePickerController:self didSelectAssets:[assets copy]];
-                                    }
-                                }
-                            } failureBlock:^(NSError *error) {
-                                NSLog(@"Error: %@", [error localizedDescription]);
-                            }];
-    }
+    dispatch_async(dispatch_get_global_queue(0, 0), ^{
+        // Load assets from URLs
+        __block NSMutableArray *assets = [NSMutableArray array];
+
+        
+        
+        dispatch_semaphore_t sema = dispatch_semaphore_create(0);
+        
+        for (NSURL *selectedAssetURL in self.selectedAssetURLs) {
+
+            __weak typeof(self) weakSelf = self;
+            
+            [self.assetsLibrary assetForURL:selectedAssetURL
+                resultBlock:^(ALAsset *asset) {
+
+                    // Add asset
+                    [assets addObject:asset];
+                    
+                    // Check if the loading finished
+                    if (assets.count == weakSelf.selectedAssetURLs.count) {
+                        // Delegate
+                        if (weakSelf.delegate && [weakSelf.delegate respondsToSelector:@selector(imagePickerController:didSelectAssets:)]) {
+                            dispatch_async(dispatch_get_main_queue(), ^{
+                                [weakSelf.delegate imagePickerController:weakSelf didSelectAssets:[assets copy]];
+                            });
+                            
+                        }
+                    }
+
+                    dispatch_semaphore_signal(sema);
+                    
+                } failureBlock:^(NSError *error) {
+                    NSLog(@"Error: %@", [error localizedDescription]);
+                }];
+            dispatch_semaphore_wait(sema, DISPATCH_TIME_FOREVER);
+        }
+    });
+
 }
 
 
@@ -327,8 +345,10 @@ ALAssetsFilter * ALAssetsFilterFromQBImagePickerControllerFilterType(QBImagePick
     if (self.allowsMultipleSelection) {
         // Add asset URL
         NSURL *assetURL = [asset valueForProperty:ALAssetPropertyAssetURL];
-        [self.selectedAssetURLs addObject:assetURL];
-        
+        NSLog(@"Assing to array :%@",assetURL);
+        if([self.selectedAssetURLs indexOfObject:assetURL] == NSNotFound){
+            [self.selectedAssetURLs addObject:assetURL];
+        }
         // Validation
         self.navigationItem.rightBarButtonItem.enabled = [self validateNumberOfSelections:self.selectedAssetURLs.count];
     } else {
