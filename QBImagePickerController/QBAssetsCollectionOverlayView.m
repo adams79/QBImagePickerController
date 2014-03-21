@@ -40,6 +40,8 @@
         checkmarkView.layer.shadowOffset = CGSizeMake(0, 0);
         checkmarkView.layer.shadowOpacity = 0.6;
         checkmarkView.layer.shadowRadius = 2.0;
+        checkmarkView.layer.shadowPath = [[UIBezierPath
+                                           bezierPathWithRect:self.bounds] CGPath];
         
         [self addSubview:checkmarkView];
         self.checkmarkView = checkmarkView;
